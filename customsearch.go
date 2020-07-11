@@ -7,10 +7,13 @@
 // Request format: https://developers.google.com/custom-search/v1/reference/rest/v1/cse/list
 // Response format: https://developers.google.com/custom-search/v1/reference/rest/v1/Search
 
+// Modifications:
+// Return string array slice
+// Get credentials from environment variables
+
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -24,7 +27,7 @@ import (
 // 	cx     = "some-custom-search-engine-id"
 // )
 
-func customSearchMain(query string) {
+func customSearchMain(query string) (links []string) {
 
 	// Get credentials from environment variables - with docker-compose, set in credentials.env
 	apiKey := os.Getenv("CSE_API_KEY")
@@ -42,8 +45,9 @@ func customSearchMain(query string) {
 		log.Fatal(err)
 	}
 
-	for i, result := range resp.Items {
-		fmt.Printf("#%d: %s\n", i+1, result.Title)
-		fmt.Printf("\t%s\n", result.Snippet)
+	for _, result := range resp.Items {
+		links = append(links, result.Link)
 	}
+
+	return
 }
