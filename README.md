@@ -87,7 +87,7 @@ docker run -p 3000:3000 go-custom-search
 	
 * **Sample Call:**
 
-    curl localhost:3000/search?query=golang 
+    `curl localhost:3000/search?query=golang`
 
 ## Built With
 
