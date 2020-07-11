@@ -1,5 +1,8 @@
 # Source: https://github.com/afdolriski/golang-docker
-FROM golang:alpine
+# Multi-stage Docker build - only need the binary (and certificates!)
+# Modification: also copy CA root certificates across to image
+
+FROM golang:alpine AS builder
 
 # Set necessary environmet variables needed for our image
 ENV GO111MODULE=on \
@@ -27,8 +30,15 @@ WORKDIR /dist
 # Copy binary from build to main folder
 RUN cp /build/main .
 
+# Build a small image
+FROM scratch
+
+# Copy certificates and binary file
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=builder /dist/main /
+
 # Export necessary port
 EXPOSE 3000
 
-# Command to run when starting the container
-CMD ["/dist/main"]
+# Command to run
+ENTRYPOINT ["/main"]
