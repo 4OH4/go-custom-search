@@ -1,0 +1,11 @@
+# go-custom-search API in Docker
+version: '3.7'
+
+services:
+  customsearch:
+    build: .
+    ports:
+      - 3000:3000
+    env_file:
+      - ./credentials.env
+    # restart: unless-stopped
