@@ -11,7 +11,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 The API is querying [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction). To use it, you must have a Google Cloud account and create a Custom Search Engine using the [control panel](https://cse.google.com/cse/all). You can use this to create a custom search engine that only references a certain group of websites, or to search the [entire web](https://support.google.com/programmable-search/answer/4513886?hl=en&visit_id=637301049785357027-1764750062&rd=1) with high-throuput (paid-for) access to Google Search.
 
-Your API key and Custom Search Engine ID must be configured in the `.env` credentials file before use.
+Your Google API key and Custom Search Engine ID must be configured in the `.env` credentials file before use.
+
+The API listens on port 3000, on the `/search` endpoint. E.g.: `curl localhost:3000/search?query=golang`. The response is a JSON document containing the search result URLs.
 
 ### Installing/building from scratch
 
